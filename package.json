@@ -1,6 +1,6 @@
 {
   "name": "advanced-search-module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "main":"./advancedSearchModule.ts",
   "scripts": {
