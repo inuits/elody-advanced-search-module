@@ -1,4 +1,4 @@
-import { gql } from 'graphql-modules';
+import { gql } from "graphql-modules";
 
 export const advancedSearchSchema = gql`
   #Advanced search
@@ -10,6 +10,7 @@ export const advancedSearchSchema = gql`
     value: String
     isAsc: Boolean
     key: String
+    order_by: String
   }
 
   input MinMaxInput {
