@@ -21,7 +21,7 @@ export const advancedSearchSchema = gql`
   input TextInput {
     value: String
   }
-  input MultiSelectInput {
+  input SelectionInput {
     value: [String]
     AndOrValue: Boolean
   }
@@ -35,7 +35,7 @@ export const advancedSearchSchema = gql`
   enum AdvancedInputType {
     MinMaxInput
     TextInput
-    MultiSelectInput
+    SelectionInput
   }
 
   input FilterInput {
@@ -43,6 +43,6 @@ export const advancedSearchSchema = gql`
     type: AdvancedInputType!
     minMaxInput: MinMaxInput
     textInput: TextInput
-    multiSelectInput: MultiSelectInput
+    selectionInput: SelectionInput
   }
 `;
