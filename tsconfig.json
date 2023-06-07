@@ -12,5 +12,5 @@
     "target": "es6"
   },
   "include": ["./**/*.ts"],
-  "files": ["../../generated-types/type-defs.ts"]
+  "files": ["./generated-types/type-defs.ts"]
 }
