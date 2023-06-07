@@ -1,14 +1,13 @@
-image: node:18
+image: ${REGISTRY_PROXY}/digipolis/dams-graphql:latest
 
 stages:
   - build
 
 build-job:       # build and publish to nexus
-  # only: # only build and publish when the package.json changes
-  #   changes: 
-  #     - package.json
+  only: # only build and publish when the package.json changes
+    changes: 
+      - package.json
   stage: build
-  image: ${REGISTRY_PROXY}/digipolis/dams-graphql:latest
   script:
     - echo "Building and publishing the code..."
     - echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
@@ -16,8 +15,8 @@ build-job:       # build and publish to nexus
     # - echo _authToken=${NPM_CONFIG__AUTH_TOKEN} >> ~/.npmrc
     # - npm config fix 
 
-    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name") #extract the package name from package.json
-    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version") #extract the version from package.json
+    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name") # extract the package name from package.json
+    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version") # extract the version from package.json
 
 
     # Check if the current version is not yet present in the published versions => new version to publish
@@ -26,7 +25,8 @@ build-job:       # build and publish to nexus
     - |
       if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
         echo "Found unpublished version ${NPM_PACKAGE_VERSION} building and publishing now..."
-        cp ~/codegen.ts ./codegen.ts
+        cp ~/codegen.ts ./codegen.ts # copy the codegen from the base image
+
         mkdir ./schemas
         find ~/node_modules/ -type f -name "*.schema.ts" -exec cp -n {} ./schemas \;
         find ~/node_modules/ -type f -name "*.queries.ts" -exec cp -n {} ./schemas \;
@@ -34,15 +34,12 @@ build-job:       # build and publish to nexus
         cat ./codegen.ts
         npm install --production=false
 
-        # mkdir -p ../generated-types
         mkdir ./generated-types
-
         npx graphql-code-generator --config ./codegen.ts
-        # no longer needed after the create
+
+        # no longer needed after the graphql generate is done
         rm -rf schemas
-        # mv -f ./generated-types/type-defs.ts ../generated-types/
-        echo "doing an ls"
-        ls -a ./generated-types/
+
         npm run build
         npm publish
         echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to the Nexus NPM registry."
