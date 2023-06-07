@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "outDir": "./dist",
     "removeComments": true,
-    "rootDir": "../../",
+    "rootDir": "./",
     "target": "es6"
   },
   "include": ["./**/*.ts"],
