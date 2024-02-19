@@ -6,13 +6,6 @@ export const advancedSearchSchema = gql`
     value: [AdvancedInputType]
   }
 
-  input SearchFilter {
-    value: String
-    isAsc: Boolean
-    key: String
-    order_by: String
-  }
-
   input MinMaxInput {
     min: Int
     max: Int
