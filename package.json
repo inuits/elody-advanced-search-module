@@ -1,8 +1,8 @@
 {
   "name": "advanced-search-module",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "license": "MIT",
-  "main":"./advancedSearchModule.ts",
+  "main": "./advancedSearchModule.ts",
   "scripts": {
     "build": "tsc"
   },
